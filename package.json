@@ -1,26 +1,29 @@
 {
   "name": "jenkins-mcp-server",
-  "version": "1.0.0",
-  "description": "MCP server for Jenkins automation",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsx src/index.ts",
-    "start": "node dist/index.js",
-    "clean": "rm -rf dist",
-    "rebuild": "npm run clean && npm run build"
+  "version": "0.1.0",
+  "description": "Jenkins Model Context Protocol server",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "jenkins-server": "./build/index.js"
   },
-  "keywords": ["mcp", "jenkins", "automation"],
-  "author": "ddang_jung",
-  "license": "MIT",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "clean": "rm -rf node_modules build package-lock.json",
+    "clean:win": "rmdir /s /q node_modules & rmdir /s /q build & del package-lock.json",
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js"
+  },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.5.0",
-    "axios": "^1.6.0",
-    "dotenv": "^16.3.1"
+    "@modelcontextprotocol/sdk": "0.6.0",
+    "axios": "^1.7.9"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "tsx": "^4.0.0",
-    "typescript": "^5.0.0"
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3"
   }
 }
